@@ -1,8 +1,10 @@
 ﻿namespace Sparkle.Api.Domain.Models
 {
-    public class ReadingsEm : IEntity<DateTime>
+    public class ReadingsEm : IEntity<Guid>
     {
-        public DateTime Id { get; set; }
+        public Guid Id { get; set; }
+
+        public DateTime Time { get; set; }
 
         public double Value { get; set; }
 

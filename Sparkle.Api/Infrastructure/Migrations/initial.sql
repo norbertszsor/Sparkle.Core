@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS Meters (
 
 CREATE TABLE IF NOT EXISTS Readings (
     Id TEXT PRIMARY KEY,
+    Time TEXT NOT NULL,
     Value REAL NOT NULL,
     MeterId TEXT,
     CreatedAt TEXT NOT NULL,
