@@ -17,9 +17,9 @@ builder.Services.AddLinqToDBContext<SparkleContext>((provider, options)
 
 builder.Services.AddSingleton<ISeeder, Seeder>();
 
-builder.Services.AddScoped<IRepository<MeterEm, Guid>, Reposiotry<MeterEm, Guid>>();
-builder.Services.AddScoped<IRepository<CompanyEm, Guid>, Reposiotry<CompanyEm, Guid>>();
-builder.Services.AddScoped<IRepository<ReadingsEm, Guid>, Reposiotry<ReadingsEm, Guid>>();
+builder.Services.AddScoped<IRepository<MeterEm, string?>, Reposiotry<MeterEm, string?>>();
+builder.Services.AddScoped<IRepository<CompanyEm, string?>, Reposiotry<CompanyEm, string?>>();
+builder.Services.AddScoped<IRepository<ReadingsEm, string?>, Reposiotry<ReadingsEm, string? >>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

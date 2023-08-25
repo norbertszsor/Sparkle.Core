@@ -5,9 +5,9 @@ VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "source", "source", "{10338862-AEAD-40AE-AC73-B35339D72E3F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparkle.Api", "Sparkle.Api\Sparkle.Api.csproj", "{E73025B3-9B3A-4E3B-8499-534D1ABDD9BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sparkle.Api", "Sparkle.Api\Sparkle.Api.csproj", "{E73025B3-9B3A-4E3B-8499-534D1ABDD9BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SparkleRegressor.Client", "SparkleRegressor.Client\SparkleRegressor.Client.csproj", "{B1F0EC38-6C94-408C-9D58-8AB44BCB9103}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SparkleRegressor.Client", "SparkleRegressor.Client\SparkleRegressor.Client.csproj", "{B1F0EC38-6C94-408C-9D58-8AB44BCB9103}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

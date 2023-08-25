@@ -4,6 +4,7 @@ using Sparkle.Api.Data;
 using Sparkle.Api.Data.Interfaces;
 using Sparkle.Api.Domain.Models;
 using Sparkle.Api.Shared.Comparers;
+using Sparkle.Api.Shared.Extensions;
 using System.Data.SQLite;
 
 namespace Sparkle.Api.Infrastructure
@@ -27,35 +28,54 @@ namespace Sparkle.Api.Infrastructure
             {
                 throw new Exception("Connection string is empty.");
             }
-            var sparkleDb = new DataConnection(context.Options);
 
-            using (var t = sparkleDb.BeginTransactionAsync())
+            using(await context.BeginTransactionAsync())
             {
-                var testQuery = context.Companies
-               .Where(x => x.Name == "godcompany")
-               .Select(x => x.Id)
-               .AsQueryable();
+                var companyId = await context.Companies.Where(x => x.Name == "godcompany").Select(x => x.Id).FirstOrDefaultAsync();
 
-                var companyId = context.Companies.Where(x => x.Name == "godcompany").Select(x => x.Id).FirstOrDefault();
-
-                if (companyId == Guid.Empty)
+                if (!string.IsNullOrEmpty(companyId))
                 {
-                    companyId = (Guid)await context.InsertWithIdentityAsync(new CompanyEm
-                    {
-                        Name = "Company",
-                        CreatedAt = DateTime.UtcNow,
-                        Description = "God is sparkle",
-                    });
+                    throw new Exception("Database is already seeded.");
                 }
-                await sparkleDb.CommitTransactionAsync();
-            }
 
-            using (var reader = new StreamReader(_seedFolderPath))
-            {
-                var columns = GetColumnsFromStream(reader);
-            }
+                companyId = await context.InsertWithGuidIdentityAsync(new CompanyEm
+                {
+                    Name = "godcompany",
+                    Description = "god is sparkle",
+                    CreatedAt = DateTime.UtcNow
+                });
 
-         
+                using (var reader = new StreamReader(_seedFolderPath))
+                {
+                    var columns = GetColumnsFromStream(reader).ToList();
+
+                    var dateTimeIndexes = columns[0];
+
+                    columns.RemoveAt(0);
+
+                    var meters = columns.Select(x => new MeterEm
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        Name = x[0],
+                        CompanyId = companyId,
+                        CreatedAt = DateTime.UtcNow,
+                        Readings = x.Skip(1).Select((r, i) => new ReadingsEm
+                        {
+                            Id = Guid.NewGuid().ToString(),
+                            Time = DateTime.Parse(dateTimeIndexes[i + 1]),
+                            Value = Convert.ToDouble(r),
+                            CreatedAt = DateTime.UtcNow,
+                        }).ToArray()
+                    });
+
+                    var readings = meters.SelectMany(x => x.Readings);
+
+                    await context.BulkCopyAsync(meters);
+                    await context.BulkCopyAsync(readings);
+                }
+
+                await context.CommitTransactionAsync();
+            }
         }
 
         public async Task MigrateAsync(SparkleContext context)
@@ -65,20 +85,19 @@ namespace Sparkle.Api.Infrastructure
                 throw new Exception("Connection string is empty.");
             }   
 
-            using var sparkleDb = new DataConnection(context.DataProvider, context.ConnectionString);
+            SQLiteConnection.CreateFile(context.Connection.DataSource);
 
-            SQLiteConnection.CreateFile(sparkleDb.Connection.DataSource);
-
-            await sparkleDb.BeginTransactionAsync();
-
-            foreach (var migration in GetMigrations())
+            using (await context.BeginTransactionAsync())
             {
-                var sql = await File.ReadAllTextAsync(migration.FullName);
+                foreach (var migration in GetMigrations())
+                {
+                    var sql = await File.ReadAllTextAsync(migration.FullName);
 
-                await sparkleDb.ExecuteAsync(sql);
+                    await context.ExecuteAsync(sql);
+                }
+
+                await context.CommitTransactionAsync();
             }
-
-            await sparkleDb.CommitTransactionAsync();
         }
 
         private ICollection<FileInfo> GetMigrations()
@@ -94,7 +113,7 @@ namespace Sparkle.Api.Infrastructure
             var csvArray = reader.ReadToEnd().Split('\n').Select(x => x.Split(',')).ToArray() ??
                 throw new Exception("stream file is empty.");
 
-            return Enumerable.Range(0, csvArray.GetLength(0))
+            return Enumerable.Range(0, csvArray[0].Length)
                 .Select(i => csvArray.Select(x => x[i]).ToArray());
         }
     }

@@ -1,8 +1,8 @@
 ﻿namespace Sparkle.Api.Domain.Models
 {
-    public class CompanyEm : IEntity<Guid>
+    public class CompanyEm : IEntity<string?>
     {
-        public Guid Id { get; set; }
+        public string? Id { get; set; }
 
         public required string Name { get; set; }
 

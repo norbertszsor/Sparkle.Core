@@ -2,6 +2,7 @@
 using Sparkle.Api.Data;
 using Sparkle.Api.Data.Interfaces;
 using Sparkle.Api.Domain;
+using Sparkle.Api.Shared.Extensions;
 
 namespace Sparkle.Api.Infrastructure
 {
@@ -29,7 +30,7 @@ namespace Sparkle.Api.Infrastructure
         {
             entity.CreatedAt = DateTime.UtcNow;
 
-            return (string)await _storage.InsertWithIdentityAsync(entity);
+            return await _storage.InsertWithGuidIdentityAsync(entity);
         }
 
         public async Task UpdateAsync(TEntity entity)
