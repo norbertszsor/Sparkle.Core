@@ -1,5 +1,6 @@
 ﻿using LinqToDB.Mapping;
 using Sparkle.Api.Domain.Models;
+using Sparkle.Api.Shared.Extensions;
 
 namespace Sparkle.Api.Data
 {
@@ -14,22 +15,25 @@ namespace Sparkle.Api.Data
                 .Property(x => x.Name).HasColumnName("Name").IsNotNull()
                 .Property(x => x.Description).HasColumnName("Description").IsNullable()
                 .Property(x => x.CreatedAt).HasColumnName("CreatedAt").IsNullable()
-                .Property(x => x.UpdatedAt).HasColumnName("UpdatedAt").IsNullable();
+                .Property(x => x.UpdatedAt).HasColumnName("UpdatedAt").IsNullable()
+                .Property(x => x.Meters).HasAssociation(nameof(CompanyEm.Id), nameof(MeterEm.CompanyId));
+
 
             builder.Entity<MeterEm>().HasTableName("Meters")
                 .Property(x => x.Id).HasColumnName("Id").IsPrimaryKey()
                 .Property(x => x.Name).HasColumnName("Name").IsNotNull()
                 .Property(x => x.CreatedAt).HasColumnName("CreatedAt").IsNullable()
                 .Property(x => x.UpdatedAt).HasColumnName("UpdatedAt").IsNullable()
-                .Association(x => x.Company, x => x.CompanyId, x => x.Id);
+                .Property(x => x.CompanyId).HasColumnName("CompanyId").IsNullable()
+                .Property(x => x.Readings).HasAssociation(nameof(MeterEm.Id), nameof(ReadingEm.MeterId));
 
-            builder.Entity<ReadingsEm>().HasTableName("Readings")
+            builder.Entity<ReadingEm>().HasTableName("Readings")
                 .Property(x => x.Id).HasColumnName("Id").IsPrimaryKey()
                 .Property(x => x.Time).HasColumnName("Time").IsNotNull()
                 .Property(x => x.Value).HasColumnName("Value").IsNotNull()
                 .Property(x => x.CreatedAt).HasColumnName("CreatedAt").IsNullable()
                 .Property(x => x.UpdatedAt).HasColumnName("UpdatedAt").IsNullable()
-                .Association(x => x.Meter, x => x.MeterId, x => x.Id);
+                .Property(x => x.MeterId).HasColumnName("MeterId").IsNullable();
 
             builder.Build();
         }

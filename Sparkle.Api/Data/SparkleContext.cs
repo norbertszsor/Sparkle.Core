@@ -17,6 +17,6 @@ namespace Sparkle.Api.Data
 
         public ITable<MeterEm> Meters => this.GetTable<MeterEm>();
 
-        public ITable<ReadingsEm> Readings => this.GetTable<ReadingsEm>();
+        public ITable<ReadingEm> Readings => this.GetTable<ReadingEm>();
     }
 }

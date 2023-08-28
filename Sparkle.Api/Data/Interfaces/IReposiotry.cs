@@ -2,7 +2,7 @@
 
 namespace Sparkle.Api.Data.Interfaces
 {
-    public interface IRepository<TEntity, TKey> where TEntity : class, IEntity<TKey>
+    public interface IReposiotry<TEntity, TKey> where TEntity : class, IEntity<TKey>
     {
         Task<TEntity?> GetByIdAsync(TKey id);
 

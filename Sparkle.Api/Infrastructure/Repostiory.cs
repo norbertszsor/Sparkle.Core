@@ -6,14 +6,14 @@ using Sparkle.Api.Shared.Extensions;
 
 namespace Sparkle.Api.Infrastructure
 {
-    public class Reposiotry<TEntity, TKey> : 
-        IRepository<TEntity, TKey> where TEntity : class, IEntity<TKey>
+    public class Repostiory<TEntity, TKey> : 
+        IReposiotry<TEntity, TKey> where TEntity : class, IEntity<TKey>
     {
         private readonly SparkleContext _storage;
 
-        public Reposiotry(SparkleContext dataContext)
+        public Repostiory(SparkleContext context)
         {
-            _storage = dataContext;
+            _storage = context;
         }
 
         public async Task<TEntity?> GetByIdAsync(TKey id)

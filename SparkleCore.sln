@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sparkle.Api", "Sparkle.Api\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SparkleRegressor.Client", "SparkleRegressor.Client\SparkleRegressor.Client.csproj", "{B1F0EC38-6C94-408C-9D58-8AB44BCB9103}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sparkle.Transfer", "Sparkle.Transfer\Sparkle.Transfer.csproj", "{8F4DE2FB-6268-4A7D-936F-BEC1E8352CBA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{B1F0EC38-6C94-408C-9D58-8AB44BCB9103}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1F0EC38-6C94-408C-9D58-8AB44BCB9103}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1F0EC38-6C94-408C-9D58-8AB44BCB9103}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F4DE2FB-6268-4A7D-936F-BEC1E8352CBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F4DE2FB-6268-4A7D-936F-BEC1E8352CBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F4DE2FB-6268-4A7D-936F-BEC1E8352CBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F4DE2FB-6268-4A7D-936F-BEC1E8352CBA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -30,6 +36,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{E73025B3-9B3A-4E3B-8499-534D1ABDD9BC} = {10338862-AEAD-40AE-AC73-B35339D72E3F}
 		{B1F0EC38-6C94-408C-9D58-8AB44BCB9103} = {10338862-AEAD-40AE-AC73-B35339D72E3F}
+		{8F4DE2FB-6268-4A7D-936F-BEC1E8352CBA} = {10338862-AEAD-40AE-AC73-B35339D72E3F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DB0581BB-79DB-4021-B480-3832DE5410DA}

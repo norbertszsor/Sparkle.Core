@@ -1,6 +1,6 @@
 ﻿namespace Sparkle.Api.Domain.Models
 {
-    public class ReadingsEm : IEntity<string?>
+    public class ReadingEm : IEntity<string?>
     {
         public string? Id { get; set; }
 

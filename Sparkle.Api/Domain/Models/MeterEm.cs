@@ -10,7 +10,7 @@
 
         public CompanyEm? Company { get; set; }
 
-        public IEnumerable<ReadingsEm>? Readings { get; set; }
+        public IEnumerable<ReadingEm>? Readings { get; set; }
 
         public DateTime CreatedAt { get; set; }
 

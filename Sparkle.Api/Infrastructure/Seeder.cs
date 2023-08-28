@@ -5,6 +5,7 @@ using Sparkle.Api.Data.Interfaces;
 using Sparkle.Api.Domain.Models;
 using Sparkle.Api.Shared.Comparers;
 using Sparkle.Api.Shared.Extensions;
+using Sparkle.Api.Shared.Helpers;
 using System.Data.SQLite;
 
 namespace Sparkle.Api.Infrastructure
@@ -12,13 +13,13 @@ namespace Sparkle.Api.Infrastructure
     public class Seeder : ISeeder
     {
         private readonly string _migrationFolderPath;
-        private readonly string _seedFolderPath;
+        private readonly string _seedFilePath;
         public Seeder()
         {
-            _migrationFolderPath = Path.Combine(Directory.GetCurrentDirectory(), 
+            _migrationFolderPath = Path.Combine(Directory.GetCurrentDirectory(),
                                "Infrastructure", "Migrations");
 
-            _seedFolderPath = Path.Combine(Directory.GetCurrentDirectory(), 
+            _seedFilePath = Path.Combine(Directory.GetCurrentDirectory(),
                                "Infrastructure", "Seed", "data.csv");
         }
 
@@ -26,16 +27,16 @@ namespace Sparkle.Api.Infrastructure
         {
             if (string.IsNullOrEmpty(context.ConnectionString))
             {
-                throw new Exception("Connection string is empty.");
+                throw ThrowHelper.Throw<Seeder>("Connection string is empty.");
             }
 
-            using(await context.BeginTransactionAsync())
+            using (await context.BeginTransactionAsync())
             {
                 var companyId = await context.Companies.Where(x => x.Name == "godcompany").Select(x => x.Id).FirstOrDefaultAsync();
 
                 if (!string.IsNullOrEmpty(companyId))
                 {
-                    throw new Exception("Database is already seeded.");
+                    return;
                 }
 
                 companyId = await context.InsertWithGuidIdentityAsync(new CompanyEm
@@ -45,7 +46,7 @@ namespace Sparkle.Api.Infrastructure
                     CreatedAt = DateTime.UtcNow
                 });
 
-                using (var reader = new StreamReader(_seedFolderPath))
+                using (var reader = new StreamReader(_seedFilePath))
                 {
                     var columns = GetColumnsFromStream(reader).ToList();
 
@@ -53,20 +54,30 @@ namespace Sparkle.Api.Infrastructure
 
                     columns.RemoveAt(0);
 
-                    var meters = columns.Select(x => new MeterEm
+                    var meters = columns.Select(column =>
                     {
-                        Id = Guid.NewGuid().ToString(),
-                        Name = x[0],
-                        CompanyId = companyId,
-                        CreatedAt = DateTime.UtcNow,
-                        Readings = x.Skip(1).Select((r, i) => new ReadingsEm
+                        var meterId = Guid.NewGuid().ToString();
+
+                        var meter = new MeterEm
                         {
-                            Id = Guid.NewGuid().ToString(),
-                            Time = DateTime.Parse(dateTimeIndexes[i + 1]),
-                            Value = Convert.ToDouble(r),
+                            Id = meterId,
+                            Name = column[0],
+                            CompanyId = companyId,
                             CreatedAt = DateTime.UtcNow,
-                        }).ToArray()
-                    });
+                            Readings = column
+                            .Skip(1)
+                            .Select((value, i) => new ReadingEm
+                            {
+                                Id = Guid.NewGuid().ToString(),
+                                MeterId = meterId,
+                                Time = DateTime.Parse(dateTimeIndexes[i + 1]),
+                                Value = Convert.ToDouble(value),
+                                CreatedAt = DateTime.UtcNow,
+                            }).ToHashSet()
+                        };
+
+                        return meter;
+                    }).ToHashSet();
 
                     var readings = meters.SelectMany(x => x.Readings);
 
@@ -80,10 +91,10 @@ namespace Sparkle.Api.Infrastructure
 
         public async Task MigrateAsync(SparkleContext context)
         {
-            if(string.IsNullOrEmpty(context.ConnectionString))
+            if (string.IsNullOrEmpty(context.ConnectionString))
             {
-                throw new Exception("Connection string is empty.");
-            }   
+                throw ThrowHelper.Throw<Seeder>("Connection string is empty.");
+            }
 
             SQLiteConnection.CreateFile(context.Connection.DataSource);
 
@@ -111,7 +122,7 @@ namespace Sparkle.Api.Infrastructure
         private static IEnumerable<string[]> GetColumnsFromStream(StreamReader reader)
         {
             var csvArray = reader.ReadToEnd().Split('\n').Select(x => x.Split(',')).ToArray() ??
-                throw new Exception("stream file is empty.");
+               throw ThrowHelper.Throw<Seeder>("Seeder file are empty.");
 
             return Enumerable.Range(0, csvArray[0].Length)
                 .Select(i => csvArray.Select(x => x[i]).ToArray());

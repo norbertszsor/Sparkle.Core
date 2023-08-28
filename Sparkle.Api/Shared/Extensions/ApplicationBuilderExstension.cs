@@ -1,5 +1,6 @@
 ﻿using Sparkle.Api.Data;
 using Sparkle.Api.Data.Interfaces;
+using Sparkle.Api.Shared.Helpers;
 
 namespace Sparkle.Api.Shared.Extensions
 {
@@ -21,7 +22,7 @@ namespace Sparkle.Api.Shared.Extensions
             }
             else
             {
-                throw new Exception("Seeder or DataContext are not registered in DI container.");
+                throw new SparkleException("Seeder or DataContext are not registered in DI container.");
             }
         }
 
@@ -41,7 +42,7 @@ namespace Sparkle.Api.Shared.Extensions
             }
             else
             {
-                throw new Exception("Seeder or DataContext are not registered in DI container.");
+                throw new SparkleException("Seeder or DataContext are not registered in DI container.");
             }
         }
     }

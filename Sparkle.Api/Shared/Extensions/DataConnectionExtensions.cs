@@ -18,7 +18,7 @@ namespace Sparkle.Api.Shared.Extensions
             }
             else
             {
-                throw new Exception("Entity does not exist or do not have Id property.");
+                throw new SparkleException("Entity does not exist or do not have Id property.");
             }
 
             await connection.InsertAsync(entity);
