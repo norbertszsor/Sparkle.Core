@@ -362,3 +362,7 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /Sparkle.Api/sparkle.db
+/Sparkle.Api/sparkle
+/Sparkle.Api/sparkle
+/Sparkle.Api/sparkle.db
+/.editorconfig
