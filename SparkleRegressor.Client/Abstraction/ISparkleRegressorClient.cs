@@ -4,6 +4,6 @@ namespace SparkleRegressor.Client.Abstraction
 {
     public interface ISparkleRegressorClient
     {
-        Task<PredictionCm?> GetPredictionAsync(GetPredictionCm cmQuery);
+        Task<Dictionary<DateTime,double>?> GetPredictionAsync(GetPredictionCm cmQuery);
     }
 }

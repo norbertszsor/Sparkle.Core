@@ -8,6 +8,6 @@
 
         public int PredictionTicks { get; set; }
 
-        public CountryCodeCm? CountryCodeDto { get; set; }
+        public CountryCodeCm? CountryCode { get; set; }
     }
 }

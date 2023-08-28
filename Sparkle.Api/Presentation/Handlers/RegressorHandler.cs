@@ -38,24 +38,17 @@ namespace Sparkle.Api.Presentation.Handlers
                 TimeSeriesDictId = meter?.Name.GetNumber(),
                 TimeSeriesDict = meter?.Readings?.ToDictionary(x => x.Time, x => x.Value),
                 PredictionTicks = request.Hours,
-                CountryCodeDto = new CountryCodeCm
+                CountryCode = new CountryCodeCm
                 {
                     Code = "PT"
                 },
-            });
+            }) ?? throw ThrowHelper.Throw<RegressorHandler>("Sprakle regressor response predictions are empty");
 
-            var result = new PredictionDto
+            return new PredictionDto
             {
-                MeterName = meter.Name,
-                Predictions = response?.Predictions,
+                MeterName = meter?.Name,
+                Predictions = response
             };
-
-            if (result.Predictions == null)
-            {
-                throw ThrowHelper.Throw<RegressorHandler>("Predictions are empty");
-            }
-
-            return result;
         }
     }
 }

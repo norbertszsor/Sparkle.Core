@@ -46,8 +46,9 @@ builder.Services.AddHttpClient<ISparkleRegressorClient, SparkleRegressorClient>(
     var srcSettings = builder.Configuration.GetSection(nameof(SRCSettings)).Get<SRCSettings>() ?? 
         throw new Exception("No SRC settings found");
 
-    client.DefaultRequestHeaders.Add("Authorization", $"Bearer {srcSettings.AccessToken}");
+    client.DefaultRequestHeaders.Add("Accept", "application/json");
     client.BaseAddress = new Uri(srcSettings.BaseUrl);
+
 }).ConfigurePrimaryHttpMessageHandler(() =>
 {
     return new SocketsHttpHandler
