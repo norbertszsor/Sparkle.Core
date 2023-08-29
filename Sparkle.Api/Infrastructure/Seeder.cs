@@ -7,6 +7,7 @@ using Sparkle.Api.Shared.Comparers;
 using Sparkle.Api.Shared.Extensions;
 using Sparkle.Api.Shared.Helpers;
 using System.Data.SQLite;
+using System.Globalization;
 
 namespace Sparkle.Api.Infrastructure
 {
@@ -71,7 +72,10 @@ namespace Sparkle.Api.Infrastructure
                                 Id = Guid.NewGuid().ToString(),
                                 MeterId = meterId,
                                 Time = DateTime.Parse(dateTimeIndexes[i + 1]),
-                                Value = Convert.ToDouble(value),
+                                Value = Convert.ToDouble(value,new NumberFormatInfo() 
+                                { 
+                                    NumberDecimalSeparator = "."}
+                                ),
                                 CreatedAt = DateTime.UtcNow,
                             }).ToHashSet()
                         };
