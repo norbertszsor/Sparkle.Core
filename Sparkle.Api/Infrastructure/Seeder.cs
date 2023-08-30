@@ -15,6 +15,7 @@ namespace Sparkle.Api.Infrastructure
     {
         private readonly string _migrationFolderPath;
         private readonly string _seedFilePath;
+
         public Seeder()
         {
             _migrationFolderPath = Path.Combine(Directory.GetCurrentDirectory(),
