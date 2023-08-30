@@ -21,4 +21,7 @@ RUN dotnet publish "Sparkle.Api.csproj" -c Release -o /app/publish /p:UseAppHost
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
+RUN ls -R /app
+
 ENTRYPOINT ["dotnet", "Sparkle.Api.dll"]
