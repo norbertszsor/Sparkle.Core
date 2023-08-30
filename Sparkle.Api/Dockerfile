@@ -18,10 +18,6 @@ RUN dotnet build "Sparkle.Api.csproj" -c Release -o /app/build
 FROM build AS publish
 RUN dotnet publish "Sparkle.Api.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
-# Copy the Migrations and Seed directories
-COPY Infrastructure/Migrations /app/Infrastructure/Migrations
-COPY Infrastructure/Seed /app/Infrastructure/Seed
-
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
