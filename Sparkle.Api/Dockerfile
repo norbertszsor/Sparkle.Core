@@ -20,9 +20,6 @@ RUN dotnet publish "Sparkle.Api.csproj" -c Release -o /app/publish /p:UseAppHost
 COPY Infrastructure/Migrations /app/Infrastructure/Migrations
 COPY Infrastructure/Seed /app/Infrastructure/Seed
 
-COPY data.csv /app/Infrastructure/Seed/data.csv
-COPY initial.sql /app/Infrastructure/Migrations/initial.sql
-
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
