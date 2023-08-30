@@ -8,6 +8,8 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["Sparkle.Api/Sparkle.Api.csproj", "Sparkle.Api/"]
+COPY ["Sparkle.Transfer/Sparkle.Transfer.csproj", "Sparkle.Transfer/"]
+COPY ["SparkleRegressor.Client/SparkleRegressor.Client.csproj", "SparkleRegressor.Client/"]
 RUN dotnet restore "Sparkle.Api/Sparkle.Api.csproj"
 COPY . .
 WORKDIR "/src/Sparkle.Api"

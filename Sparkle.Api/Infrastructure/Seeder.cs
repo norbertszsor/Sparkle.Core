@@ -101,6 +101,8 @@ namespace Sparkle.Api.Infrastructure
                 throw ThrowHelper.Throw<Seeder>("Connection string is empty.");
             }
 
+            throw ThrowHelper.Throw<Seeder>(AppContext.BaseDirectory+"-"+Directory.GetCurrentDirectory());
+
             SQLiteConnection.CreateFile(context.Connection.DataSource);
 
             using (await context.BeginTransactionAsync())
