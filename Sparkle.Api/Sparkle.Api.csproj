@@ -32,4 +32,13 @@
     <ProjectReference Include="..\SparkleRegressor.Client\SparkleRegressor.Client.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="Infrastructure\Seed\data.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Infrastructure\Migrations\initial.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
