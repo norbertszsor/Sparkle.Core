@@ -22,7 +22,6 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 
-RUN ls -R /app/publish
-RUN ls -R /app
+RUN ls -R /
 
 ENTRYPOINT ["dotnet", "Sparkle.Api.dll"]
