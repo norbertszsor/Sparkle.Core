@@ -1,3 +1,4 @@
+using FluentValidation;
 using LinqToDB;
 using LinqToDB.AspNet;
 using LinqToDB.AspNet.Logging;
@@ -7,6 +8,7 @@ using Sparkle.Api.Domain.Models;
 using Sparkle.Api.Infrastructure;
 using Sparkle.Api.Presentation.Endpoints;
 using Sparkle.Api.Presentation.ErrorHandler;
+using Sparkle.Api.Presentation.Validation;
 using Sparkle.Api.Shared.Extensions;
 using SparkleRegressor.Client;
 using SparkleRegressor.Client.Abstraction;
@@ -56,6 +58,8 @@ builder.Services.AddHttpClient<ISparkleRegressorClient, SparkleRegressorClient>(
         PooledConnectionIdleTimeout = TimeSpan.FromMinutes(5),
     };
 }).SetHandlerLifetime(Timeout.InfiniteTimeSpan);
+
+builder.Services.AddValidatorsFromAssemblyContaining(typeof(ReggressorValidation));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

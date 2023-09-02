@@ -5,7 +5,7 @@
         public int Compare(FileInfo? x, FileInfo? y)
         {
             if (x == null || y == null)
-                throw new ArgumentNullException();
+                throw new ArgumentNullException(nameof(x), "FileInfo is null");
 
             return x.CreationTime.CompareTo(y.CreationTime);
         }

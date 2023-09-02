@@ -28,7 +28,7 @@ namespace Sparkle.Api.Presentation.ErrorHandler
             catch(Exception ex)
             {
                 _logger.LogError(ex, ex.Message);
-                throw;
+                await HandleExceptionAsync(context, ex);
             }
         }
 

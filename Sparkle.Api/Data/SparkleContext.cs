@@ -1,6 +1,5 @@
 ﻿using LinqToDB;
 using LinqToDB.Data;
-using LinqToDB.Mapping;
 using Sparkle.Api.Domain.Models;
 
 namespace Sparkle.Api.Data

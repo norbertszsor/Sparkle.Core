@@ -1,9 +1,6 @@
 ﻿using LinqToDB;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Sparkle.Api.Data;
-using Sparkle.Api.Data.Interfaces;
-using Sparkle.Api.Domain.Models;
 using Sparkle.Api.Shared.Extensions;
 using Sparkle.Api.Shared.Helpers;
 using Sparkle.Transfer.Data;
@@ -16,16 +13,11 @@ namespace Sparkle.Api.Presentation.Handlers
     public class RegressorHandler : IRequestHandler<GetPredictionQuery, PredictionDto>
     {
         private readonly SparkleContext _storage;
-        private readonly IReposiotry<MeterEm, string?> _meterRepository;
         private readonly ISparkleRegressorClient _sparkleRegressorClient;
 
-        public RegressorHandler(
-            SparkleContext storage,
-            IReposiotry<MeterEm, string?> meterRepository,
-            ISparkleRegressorClient sparkleRegressorClient)
+        public RegressorHandler(SparkleContext storage, ISparkleRegressorClient sparkleRegressorClient)
         {
             _storage = storage;
-            _meterRepository = meterRepository;
             _sparkleRegressorClient = sparkleRegressorClient;
         }
 

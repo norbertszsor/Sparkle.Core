@@ -25,13 +25,12 @@ namespace SparkleRegressor.Client.Logic
 
         public async Task<Dictionary<DateTime,double>?> GetPredictionAsync(GetPredictionCm cmQuery)
         {
-            var predictionUrl = "api/reggressor/predict";
+            const string predictionUrl = "api/reggressor/predict";
 
             var jsonRequest = JsonSerializer.Serialize(cmQuery, _jsonSerializerOptions);
 
-            var content = new StringContent(jsonRequest, Encoding.UTF8, "application/json");
-
-            var response = await _httpClient.PostAsync(predictionUrl, content);
+            var response = await _httpClient.PostAsync(predictionUrl, 
+                new StringContent(jsonRequest, Encoding.UTF8, "application/json"));
 
             if (!response.IsSuccessStatusCode)
             {
@@ -47,9 +46,8 @@ namespace SparkleRegressor.Client.Logic
 
             var predictions = jsonElementPredictions.Deserialize<Dictionary<string,double>>();
 
-            var resultPredictions = predictions?.ToDictionary(x => DateTime.Parse(x.Key).ToUniversalTime(), x => x.Value);
-
-            return resultPredictions;
+            return predictions?.ToDictionary(x => DateTime.Parse(x.Key)
+                .ToUniversalTime(), x => x.Value);
         }
     }
 }

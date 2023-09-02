@@ -34,7 +34,10 @@ namespace Sparkle.Api.Infrastructure
 
             using (await context.BeginTransactionAsync())
             {
-                var companyId = await context.Companies.Where(x => x.Name == "godcompany").Select(x => x.Id).FirstOrDefaultAsync();
+                var companyId = await context.Companies
+                    .Where(x => x.Name == "godcompany")
+                    .Select(x => x.Id)
+                    .FirstOrDefaultAsync();
 
                 if (!string.IsNullOrEmpty(companyId))
                 {
@@ -126,11 +129,14 @@ namespace Sparkle.Api.Infrastructure
 
         private static IEnumerable<string[]> GetColumnsFromStream(StreamReader reader)
         {
-            var csvArray = reader.ReadToEnd().Split('\n').Select(x => x.Split(',')).ToArray() ??
-               throw ThrowHelper.Throw<Seeder>("Seeder file are empty.");
+            var csvArray = reader.ReadToEnd()
+                .Split('\n')
+                .Select(x => x.Split(','))
+                .ToArray() ?? throw ThrowHelper.Throw<Seeder>("Seeder file are empty.");
 
             return Enumerable.Range(0, csvArray[0].Length)
-                .Select(i => csvArray.Select(x => x[i]).ToArray());
+                .Select(i => csvArray.Select(x => x[i])
+                .ToArray());
         }
     }
 }
