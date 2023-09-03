@@ -76,6 +76,8 @@ app.UseSwaggerUI();
 
 app.RunMigrator();
 
+app.RunSeeder();
+
 if(app.Environment.IsDevelopment())
 {
     app.UseHttpLogging();
