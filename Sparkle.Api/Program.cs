@@ -74,15 +74,14 @@ app.UseSwagger();
 
 app.UseSwaggerUI();
 
-app.UseHttpsRedirection();
-
 app.RunMigrator();
 
 if(app.Environment.IsDevelopment())
 {
+    app.UseHttpLogging();
     app.Run();
 }
 else
 {
-    app.Run("https://0.0.0.0:10000");
+    app.Run("http://0.0.0.0:10000");
 }
