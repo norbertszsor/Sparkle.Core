@@ -2,7 +2,7 @@
 
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
-EXPOSE 80
+EXPOSE 8080
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
@@ -24,4 +24,5 @@ COPY --from=publish /app/publish .
 
 RUN ls -R /app
 
-ENTRYPOINT ["dotnet", "Sparkle.Api.dll"]
+#ENTRYPOINT ["dotnet", "Sparkle.Api.dll"]
+CMD ["dotnet", "run", "--urls", "http://0.0.0.0:8080"]
