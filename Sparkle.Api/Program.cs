@@ -50,7 +50,7 @@ builder.Services.AddHttpClient<ISparkleRegressorClient, SparkleRegressorClient>(
 
     client.DefaultRequestHeaders.Add("Accept", "application/json");
     client.BaseAddress = new Uri(srcSettings.BaseUrl);
-    client.Timeout = TimeSpan.FromMinutes(5);
+    client.Timeout = TimeSpan.FromMinutes(10);
 
 }).ConfigurePrimaryHttpMessageHandler(() =>
 {
