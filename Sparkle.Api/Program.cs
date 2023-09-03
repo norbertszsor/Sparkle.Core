@@ -78,6 +78,11 @@ app.UseHttpsRedirection();
 
 app.RunMigrator();
 
-app.RunSeeder();
-
-app.Run();
+if(app.Environment.IsDevelopment())
+{
+    app.Run();
+}
+else
+{
+    app.Run("https://0.0.0.0:10000");
+}
