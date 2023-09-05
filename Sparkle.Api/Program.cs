@@ -56,7 +56,7 @@ builder.Services.AddHttpClient<ISparkleRegressorClient, SparkleRegressorClient>(
 {
     return new SocketsHttpHandler
     {
-        PooledConnectionIdleTimeout = TimeSpan.FromMinutes(15),
+        PooledConnectionIdleTimeout = TimeSpan.FromMinutes(10),
     };
 }).SetHandlerLifetime(Timeout.InfiniteTimeSpan);
 
