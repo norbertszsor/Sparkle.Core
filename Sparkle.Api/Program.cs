@@ -6,8 +6,8 @@ using Sparkle.Api.Data;
 using Sparkle.Api.Data.Interfaces;
 using Sparkle.Api.Domain.Models;
 using Sparkle.Api.Infrastructure;
+using Sparkle.Api.Presentation;
 using Sparkle.Api.Presentation.Endpoints;
-using Sparkle.Api.Presentation.ErrorHandler;
 using Sparkle.Api.Presentation.Validation;
 using Sparkle.Api.Shared.Extensions;
 using SparkleRegressor.Client;
@@ -15,6 +15,7 @@ using SparkleRegressor.Client.Abstraction;
 using SparkleRegressor.Client.Logic;
 using System.Reflection;
 
+#region builder
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("Default") ?? 
@@ -33,16 +34,18 @@ builder.Services.AddLinqToDBContext<SparkleContext>((provider, options)
 
 builder.Services.AddSingleton<ISeeder, Seeder>();
 
+#region repositories
 builder.Services.AddScoped<IReposiotry<MeterEm, string?>, Repostiory<MeterEm, string?>>();
 builder.Services.AddScoped<IReposiotry<CompanyEm, string?>, Repostiory<CompanyEm, string?>>();
 builder.Services.AddScoped<IReposiotry<ReadingEm, string?>, Repostiory<ReadingEm, string? >>();
+#endregion
 
 builder.Services.AddMediatR(options => 
 {
     options.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
     options.Lifetime = ServiceLifetime.Scoped;
 });
-
+#region http clients
 builder.Services.AddHttpClient<ISparkleRegressorClient, SparkleRegressorClient>((serviceProvider, client) =>
 {
     var srcSettings = builder.Configuration.GetSection(nameof(SRCSettings)).Get<SRCSettings>() ?? 
@@ -59,27 +62,40 @@ builder.Services.AddHttpClient<ISparkleRegressorClient, SparkleRegressorClient>(
         PooledConnectionIdleTimeout = TimeSpan.FromMinutes(10),
     };
 }).SetHandlerLifetime(Timeout.InfiniteTimeSpan);
+#endregion
 
-builder.Services.AddValidatorsFromAssemblyContaining(typeof(ReggressorValidation));
+#region validators
+builder.Services.AddValidatorsFromAssemblyContaining(typeof(ReggressorValidator));
+builder.Services.AddValidatorsFromAssemblyContaining(typeof(CompanyValidator));
+builder.Services.AddValidatorsFromAssemblyContaining(typeof(MeterValidator));
+#endregion
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+#endregion
 
+#region app
 var app = builder.Build();
 
 app.UseMiddleware<ErrorHandlingMiddleware>();
 
+#region endpoints
 app.MapReggressorEndpoints();
+app.MapCompanyEndpoints();
+app.MapMeterEndpoints();
+#endregion
 
 app.UseSwagger();
 
 app.UseSwaggerUI();
 
+#region seeder
 app.RunMigrator();
 
 app.RunSeeder();
+#endregion
 
-if(app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
 {
     app.UseHttpLogging();
     app.Run();
@@ -88,3 +104,4 @@ else
 {
     app.Run("http://0.0.0.0:10000");
 }
+#endregion

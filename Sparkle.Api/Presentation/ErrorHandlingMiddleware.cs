@@ -2,7 +2,7 @@
 using System.Net;
 using System.Text.Json;
 
-namespace Sparkle.Api.Presentation.ErrorHandler
+namespace Sparkle.Api.Presentation
 {
     public class ErrorHandlingMiddleware : IMiddleware
     {
@@ -19,13 +19,13 @@ namespace Sparkle.Api.Presentation.ErrorHandler
             {
                 await next(context);
             }
-            catch(SparkleException ex)
+            catch (SparkleException ex)
             {
                 _logger.LogError(ex, ex.Message);
 
                 await HandleExceptionAsync(context, ex);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, ex.Message);
                 await HandleExceptionAsync(context, ex);

@@ -3,9 +3,9 @@ using Sparkle.Transfer.Query;
 
 namespace Sparkle.Api.Presentation.Validation
 {
-    public class ReggressorValidation : AbstractValidator<GetPredictionQuery>
+    public class ReggressorValidator : AbstractValidator<GetPredictionQuery>
     {
-        public ReggressorValidation() 
+        public ReggressorValidator() 
         {
             RuleFor(x => x.MeterName).NotEmpty()
                 .WithMessage("MeterName is required");

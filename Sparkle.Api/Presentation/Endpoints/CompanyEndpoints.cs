@@ -3,11 +3,11 @@ using Sparkle.Transfer.Query;
 
 namespace Sparkle.Api.Presentation.Endpoints
 {
-    public static class ReggressorEndpoints
+    public static class CompanyEndpoints
     {
-        public static void MapReggressorEndpoints(this IEndpointRouteBuilder app)
+        public static void MapCompanyEndpoints(this IEndpointRouteBuilder app)
         {
-            app.MapGet("/api/prediction/get", async (IMediator mediator, [AsParameters] GetPredictionQuery query) =>
+            app.MapGet("/api/company/get", async (IMediator mediator, [AsParameters] GetCompanyQuery query) =>
             {
                 var result = await mediator.Send(query);
 
@@ -15,7 +15,7 @@ namespace Sparkle.Api.Presentation.Endpoints
                     ? Results.NotFound()
                     : Results.Ok(result);
 
-            }).AddEndpointFilter<ValidationFilter<GetPredictionQuery>>();
+            }).AddEndpointFilter<ValidationFilter<GetCompanyQuery>>();
         }
     }
 }
