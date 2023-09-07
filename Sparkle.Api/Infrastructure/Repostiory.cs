@@ -18,7 +18,7 @@ namespace Sparkle.Api.Infrastructure
 
         public async Task<TEntity?> GetByIdAsync(TKey id)
         {
-            return await _storage.GetTable<TEntity>().FirstOrDefaultAsync(e => e.Equals(id));
+            return await _storage.GetTable<TEntity>().FirstOrDefaultAsync(e => e.Id.Equals(id));
         }
 
         public async Task<IEnumerable<TEntity>> GetAllAsync()

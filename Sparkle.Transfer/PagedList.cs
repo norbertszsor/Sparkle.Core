@@ -2,13 +2,8 @@
 
 namespace Sparkle.Transfer
 {
-    public class PagedList<T> : IEnumerable<T>
+    public class PagedList<T>
     {
-        public IEnumerator<T> GetEnumerator()
-        {
-            return Items.GetEnumerator();
-        }
-
         public int TotalCount { get; set; }
 
         public int PageIndex { get; set; }
@@ -19,7 +14,7 @@ namespace Sparkle.Transfer
 
         public bool HasPreviousPage => PageIndex > 1;
 
-        public bool HasNextPage => PageIndex < TotalPages;
+        public bool HasNextPage => PageIndex < TotalPages - 1;
 
         public IEnumerable<T> Items { get; set; }
 
@@ -27,13 +22,8 @@ namespace Sparkle.Transfer
         {
             TotalCount = count;
             PageIndex = pageIndex ?? 0;
-            PageSize = pageSize ?? 100;
+            PageSize = pageSize ?? items.Count();
             Items = items;
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
         }
     }
 }

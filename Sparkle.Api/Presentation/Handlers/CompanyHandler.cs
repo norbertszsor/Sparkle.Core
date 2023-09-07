@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Sparkle.Api.Data.Interfaces;
 using Sparkle.Api.Domain.Models;
+using Sparkle.Api.Shared.Helpers;
 using Sparkle.Api.Shared.Mappers;
 using Sparkle.Transfer.Data;
 using Sparkle.Transfer.Query;
@@ -20,7 +21,8 @@ namespace Sparkle.Api.Presentation.Handlers
         {
             var companies = await _companyRepository.GetAllAsync();
 
-            var company = companies.FirstOrDefault()?.MapToDto();
+            var company = companies.FirstOrDefault()?.MapToDto() ?? 
+                throw ThrowHelper.Throw<CompanyHandler>($"Company not found");
 
             return company;
         }

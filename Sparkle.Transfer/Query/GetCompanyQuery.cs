@@ -2,7 +2,5 @@
 
 namespace Sparkle.Transfer.Query
 {
-    public class GetCompanyQuery : IQuery<CompanyDto>
-    {
-    }
+    public class GetCompanyQuery : IQuery<CompanyDto>{}
 }

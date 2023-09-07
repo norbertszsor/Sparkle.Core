@@ -34,17 +34,18 @@ builder.Services.AddLinqToDBContext<SparkleContext>((provider, options)
 
 builder.Services.AddSingleton<ISeeder, Seeder>();
 
+builder.Services.AddMediatR(options =>
+{
+    options.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+    options.Lifetime = ServiceLifetime.Scoped;
+});
+
 #region repositories
 builder.Services.AddScoped<IReposiotry<MeterEm, string?>, Repostiory<MeterEm, string?>>();
 builder.Services.AddScoped<IReposiotry<CompanyEm, string?>, Repostiory<CompanyEm, string?>>();
 builder.Services.AddScoped<IReposiotry<ReadingEm, string?>, Repostiory<ReadingEm, string? >>();
 #endregion
 
-builder.Services.AddMediatR(options => 
-{
-    options.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
-    options.Lifetime = ServiceLifetime.Scoped;
-});
 #region http clients
 builder.Services.AddHttpClient<ISparkleRegressorClient, SparkleRegressorClient>((serviceProvider, client) =>
 {
@@ -70,8 +71,19 @@ builder.Services.AddValidatorsFromAssemblyContaining(typeof(CompanyValidator));
 builder.Services.AddValidatorsFromAssemblyContaining(typeof(MeterValidator));
 #endregion
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", builder =>
+    {
+        builder.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
+});
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 #endregion
 
 #region app
@@ -88,6 +100,8 @@ app.MapMeterEndpoints();
 app.UseSwagger();
 
 app.UseSwaggerUI();
+
+app.UseCors("AllowAll");
 
 #region seeder
 app.RunMigrator();

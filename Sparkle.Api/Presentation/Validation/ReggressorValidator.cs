@@ -7,11 +7,11 @@ namespace Sparkle.Api.Presentation.Validation
     {
         public ReggressorValidator() 
         {
-            RuleFor(x => x.MeterName).NotEmpty()
+            RuleFor(x => x.MeterId).NotEmpty()
                 .WithMessage("MeterName is required");
 
-            RuleFor(x => x.Hours).GreaterThan(24)
-                .WithMessage("Hours must be greater than 24");
+            RuleFor(x => x.Hours).GreaterThan(23)
+                .WithMessage("Hours must be greater than 23");
         }
     }
 }

@@ -1,6 +1,9 @@
 ﻿using LinqToDB;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Sparkle.Api.Data;
+using Sparkle.Api.Data.Interfaces;
+using Sparkle.Api.Domain.Models;
 using Sparkle.Api.Shared.Extensions;
 using Sparkle.Api.Shared.Helpers;
 using Sparkle.Transfer.Data;
@@ -15,7 +18,9 @@ namespace Sparkle.Api.Presentation.Handlers
         private readonly SparkleContext _storage;
         private readonly ISparkleRegressorClient _sparkleRegressorClient;
 
-        public RegressorHandler(SparkleContext storage, ISparkleRegressorClient sparkleRegressorClient)
+        public RegressorHandler(
+            SparkleContext storage,
+            ISparkleRegressorClient sparkleRegressorClient)
         {
             _storage = storage;
             _sparkleRegressorClient = sparkleRegressorClient;
@@ -23,7 +28,8 @@ namespace Sparkle.Api.Presentation.Handlers
 
         public async Task<PredictionDto> Handle(GetPredictionQuery request, CancellationToken cancellationToken)
         {
-            var meter = _storage.Meters.LoadWith(x => x.Readings).FirstOrDefault(x => x.Name == request.MeterName);
+            var meter = _storage.Meters.LoadWith(x => x.Readings).FirstOrDefault(x => x.Id == request.MeterId) ?? 
+                throw ThrowHelper.Throw<RegressorHandler>($"Meter with id {request.MeterId} not found");
 
             var response = await _sparkleRegressorClient.GetPredictionAsync(new GetPredictionCm
             {
@@ -39,7 +45,7 @@ namespace Sparkle.Api.Presentation.Handlers
             return new PredictionDto
             {
                 MeterName = meter?.Name,
-                Predictions = response
+                Prediction = response
             };
         }
     }
