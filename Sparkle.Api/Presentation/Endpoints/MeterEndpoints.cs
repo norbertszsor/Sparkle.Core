@@ -7,7 +7,7 @@ namespace Sparkle.Api.Presentation.Endpoints
     {
         public static void MapMeterEndpoints(this IEndpointRouteBuilder app)
         {
-            app.MapGet("/api/meter/getAll", async (IMediator mediator, [AsParameters] GetMeterListQuery query) =>
+            app.MapGet("/api/meter/get/list", async (IMediator mediator, [AsParameters] GetMeterListQuery query) =>
             {
                 var result = await mediator.Send(query);
 

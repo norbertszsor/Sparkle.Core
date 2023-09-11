@@ -66,9 +66,10 @@ builder.Services.AddHttpClient<ISparkleRegressorClient, SparkleRegressorClient>(
 #endregion
 
 #region validators
-builder.Services.AddValidatorsFromAssemblyContaining(typeof(ReggressorValidator));
-builder.Services.AddValidatorsFromAssemblyContaining(typeof(CompanyValidator));
-builder.Services.AddValidatorsFromAssemblyContaining(typeof(MeterValidator));
+builder.Services.AddValidatorsFromAssemblyContaining(typeof(PredictionQueryValidator));
+builder.Services.AddValidatorsFromAssemblyContaining(typeof(ComprasionQueryValidator));
+builder.Services.AddValidatorsFromAssemblyContaining(typeof(CompanyQueryValidator));
+builder.Services.AddValidatorsFromAssemblyContaining(typeof(MeterQueryValidator));
 #endregion
 
 builder.Services.AddCors(options =>
