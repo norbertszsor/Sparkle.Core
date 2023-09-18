@@ -1,4 +1,5 @@
-# Sparkle Core v1.0.0 ![logo](https://github.com/norbertszsor/Sparkle.Core/assets/47736350/1108c1f9-885d-427a-b772-b7cea60a9cba)
+# Sparkle Core v1.0.0 
+![logo](https://github.com/norbertszsor/Sparkle.Core/assets/47736350/1108c1f9-885d-427a-b772-b7cea60a9cba)
 
 Sparkle Core is a component of the Sparkle project, developed using .NET Core 7 and following the clean architecture approach. This core module is responsible for managing data flow, utilizing a suite of .NET technologies. It handles data storage and presentation to other system layers, enabling fast access to extensive telemetry records necessary for building predictive models. Sparkle Core provides key interfaces that facilitate seamless communication between [user interface](https://github.com/norbertszsor/Sparkle.Web) and the [regression module](https://github.com/norbertszsor/Sparkle.Regressor). It also supports two forecasting methods: predictive and comparative.
 
