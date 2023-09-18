@@ -69,10 +69,6 @@ To deploy Sparkle Core as an HTTPS service, you have two options:
 
 You can access the live version of Sparkle Core at [https://sparklecore7.bsite.net/swagger/index.html](https://sparklecore7.bsite.net/swagger/index.html).
 
-## License
-
-This project is licensed under the [MIT License](LICENSE.md). Refer to the [LICENSE](LICENSE.md) file for detailed information.
-
 ## Version
 
 The current version of Sparkle Core is 1.0.0.
