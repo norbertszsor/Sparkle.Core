@@ -2,14 +2,14 @@ using FluentValidation;
 using LinqToDB;
 using LinqToDB.AspNet;
 using LinqToDB.AspNet.Logging;
-using Sparkle.Api.Data;
-using Sparkle.Api.Data.Interfaces;
-using Sparkle.Api.Domain.Models;
-using Sparkle.Api.Infrastructure;
-using Sparkle.Api.Presentation;
-using Sparkle.Api.Presentation.Endpoints;
-using Sparkle.Api.Presentation.Validation;
-using Sparkle.Api.Shared.Extensions;
+using Sparkle.Api;
+using Sparkle.Api.Endpoints;
+using Sparkle.Api.Validators;
+using Sparkle.Domain.Data;
+using Sparkle.Domain.Interfaces;
+using Sparkle.Domain.Models;
+using Sparkle.Shared.Extensions;
+using Sparkle.Infrastructure;
 using SparkleRegressor.Client;
 using SparkleRegressor.Client.Abstraction;
 using SparkleRegressor.Client.Logic;
@@ -117,6 +117,6 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
-    app.Run("http://0.0.0.0:10000");
+    app.Run();
 }
 #endregion

@@ -29,14 +29,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Sparkle.Infrastructure\Sparkle.Infrastructure.csproj" />
+    <ProjectReference Include="..\Sparkle.Shared\Sparkle.Shared.csproj" />
     <ProjectReference Include="..\Sparkle.Transfer\Sparkle.Transfer.csproj" />
     <ProjectReference Include="..\SparkleRegressor.Client\SparkleRegressor.Client.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Infrastructure\Migrations\initial.sql">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
 
 </Project>
