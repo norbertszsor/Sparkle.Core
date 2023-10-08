@@ -1,4 +1,4 @@
-﻿namespace Sparkle.Transfer
+﻿namespace Sparkle.Transfer.Interfaces
 {
     public interface IPagedQuery<out TResponse> : IQuery<TResponse>
     {

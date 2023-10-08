@@ -1,5 +1,6 @@
 ﻿using Sparkle.Transfer.Data;
 using Sparkle.Transfer.Enums;
+using Sparkle.Transfer.Interfaces;
 
 namespace Sparkle.Transfer.Query
 {

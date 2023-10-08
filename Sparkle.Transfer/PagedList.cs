@@ -1,6 +1,4 @@
-﻿using System.Collections;
-
-namespace Sparkle.Transfer
+﻿namespace Sparkle.Transfer
 {
     public class PagedList<T>
     {
