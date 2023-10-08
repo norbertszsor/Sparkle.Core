@@ -1,25 +1,17 @@
-using FluentValidation;
 using LinqToDB;
 using LinqToDB.AspNet;
 using LinqToDB.AspNet.Logging;
-using Sparkle.Api;
-using Sparkle.Api.Endpoints;
-using Sparkle.Api.Validators;
 using Sparkle.Domain.Data;
-using Sparkle.Domain.Interfaces;
-using Sparkle.Domain.Models;
 using Sparkle.Shared.Extensions;
 using Sparkle.Infrastructure;
 using SparkleRegressor.Client;
-using SparkleRegressor.Client.Abstraction;
-using SparkleRegressor.Client.Logic;
-using System.Reflection;
+using Sparkle.Shared.Helpers;
+using Sparkle.Handling;
+using Sparkle.Api.Extensions;
 
 #region builder
-var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("Default") ?? 
-    throw new Exception("No connection string found");
+var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddLogging(options =>
 {
@@ -27,76 +19,39 @@ builder.Services.AddLogging(options =>
     options.AddDebug();
 });
 
-builder.Services.AddTransient<ErrorHandlingMiddleware>();
-
-builder.Services.AddLinqToDBContext<SparkleContext>((provider, options)
-    => options.UseSQLite(connectionString).UseDefaultLogging(provider));
-
-builder.Services.AddSingleton<ISeeder, Seeder>();
-
-builder.Services.AddMediatR(options =>
-{
-    options.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
-    options.Lifetime = ServiceLifetime.Scoped;
-});
-
-#region repositories
-builder.Services.AddScoped<IReposiotry<MeterEm, string?>, Repostiory<MeterEm, string?>>();
-builder.Services.AddScoped<IReposiotry<CompanyEm, string?>, Repostiory<CompanyEm, string?>>();
-builder.Services.AddScoped<IReposiotry<ReadingEm, string?>, Repostiory<ReadingEm, string? >>();
-#endregion
-
-#region http clients
-builder.Services.AddHttpClient<ISparkleRegressorClient, SparkleRegressorClient>((serviceProvider, client) =>
-{
-    var srcSettings = builder.Configuration.GetSection(nameof(SRCSettings)).Get<SRCSettings>() ?? 
-        throw new Exception("No SRC settings found");
-
-    client.DefaultRequestHeaders.Add("Accept", "application/json");
-    client.BaseAddress = new Uri(srcSettings.BaseUrl);
-    client.Timeout = TimeSpan.FromMinutes(10);
-
-}).ConfigurePrimaryHttpMessageHandler(() =>
-{
-    return new SocketsHttpHandler
-    {
-        PooledConnectionIdleTimeout = TimeSpan.FromMinutes(10),
-    };
-}).SetHandlerLifetime(Timeout.InfiniteTimeSpan);
-#endregion
-
-#region validators
-builder.Services.AddValidatorsFromAssemblyContaining(typeof(PredictionQueryValidator));
-builder.Services.AddValidatorsFromAssemblyContaining(typeof(ComprasionQueryValidator));
-builder.Services.AddValidatorsFromAssemblyContaining(typeof(CompanyQueryValidator));
-builder.Services.AddValidatorsFromAssemblyContaining(typeof(MeterQueryValidator));
-#endregion
-
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", builder =>
+    options.AddPolicy("AllowAll", corsPolicyBuilder =>
     {
-        builder.AllowAnyOrigin()
+        corsPolicyBuilder.AllowAnyOrigin()
             .AllowAnyMethod()
             .AllowAnyHeader();
     });
 });
 
+var connectionString = builder.Configuration.GetConnectionString("Default") ??
+                       throw ThrowHelper.Throw<WebApplication>("no connection string found");
+
+builder.Services.AddLinqToDBContext<SparkleContext>((provider, options) =>
+    options.UseSQLite(connectionString).UseDefaultLogging(provider));
+
+builder.Services.AddInfrastructure();
+
+builder.Services.AddHandling();
+
+builder.Services.AddSparkleRegressorClient(builder.Configuration);
+
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen();
 
 #endregion
 
 #region app
+
 var app = builder.Build();
 
-app.UseMiddleware<ErrorHandlingMiddleware>();
-
-#region endpoints
-app.MapReggressorEndpoints();
-app.MapCompanyEndpoints();
-app.MapMeterEndpoints();
-#endregion
+app.AddEndpoints();
 
 app.UseSwagger();
 
@@ -104,11 +59,9 @@ app.UseSwaggerUI();
 
 app.UseCors("AllowAll");
 
-#region seeder
 app.RunMigrator();
 
 app.RunSeeder();
-#endregion
 
 if (app.Environment.IsDevelopment())
 {
@@ -119,4 +72,5 @@ else
 {
     app.Run();
 }
+
 #endregion

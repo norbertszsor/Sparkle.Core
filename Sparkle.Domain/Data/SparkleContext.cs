@@ -6,8 +6,7 @@ namespace Sparkle.Domain.Data
 {
     public class SparkleContext : DataConnection
     {
-        public SparkleContext(DataOptions<SparkleContext> options)
-            : base(options.Options)
+        public SparkleContext(DataOptions<SparkleContext> options) : base(options.Options)
         {
             AddMappingSchema(new SparkleMappingSchema());
         }
@@ -17,5 +16,7 @@ namespace Sparkle.Domain.Data
         public ITable<MeterEm> Meters => this.GetTable<MeterEm>();
 
         public ITable<ReadingEm> Readings => this.GetTable<ReadingEm>();
+
+        public ITable<ApiTokenEm> ApiTokens => this.GetTable<ApiTokenEm>();
     }
 }

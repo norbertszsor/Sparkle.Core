@@ -1,35 +1,33 @@
 ﻿using SparkleRegressor.Client.Abstraction;
 using SparkleRegressor.Client.Models;
-using System.Collections;
-using System.Net.Http.Headers;
+using SparkleRegressor.Client.Models.Query;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 
 namespace SparkleRegressor.Client.Logic
 {
-    public class SparkleRegressorClient : ISparkleRegressorClient
+    internal class SparkleRegressorClient : ISparkleRegressorClient
     {
         private readonly HttpClient _httpClient;
         private readonly JsonSerializerOptions _jsonSerializerOptions;
 
-        public SparkleRegressorClient(HttpClient httpClient)
+        internal SparkleRegressorClient(HttpClient httpClient)
         {
             _httpClient = httpClient;
             _jsonSerializerOptions = new JsonSerializerOptions
             {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                WriteIndented = true
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase, WriteIndented = true
             };
         }
 
-        public async Task<Dictionary<DateTime,double>?> GetPredictionAsync(GetPredictionCm cmQuery)
+        public async Task<Dictionary<DateTime, double>?> GetPredictionAsync(GetPredictionCm cmQuery)
         {
-            const string predictionUrl = "api/reggressor/predict";
+            const string predictionUrl = "api/regressor/predict";
 
             var jsonRequest = JsonSerializer.Serialize(cmQuery, _jsonSerializerOptions);
 
-            var response = await _httpClient.PostAsync(predictionUrl, 
+            var response = await _httpClient.PostAsync(predictionUrl,
                 new StringContent(jsonRequest, Encoding.UTF8, "application/json"));
 
             if (!response.IsSuccessStatusCode)
@@ -40,11 +38,11 @@ namespace SparkleRegressor.Client.Logic
             var result = await response.Content.ReadFromJsonAsync<ResponseCm>();
 
             var jsonElementData = result?.Data as JsonElement? ?? 
-                throw new Exception("Error getting prediction");
+                                  throw new Exception("Error getting prediction, response data is empty");
 
             var jsonElementPredictions = jsonElementData.GetProperty("predictions");
 
-            var predictions = jsonElementPredictions.Deserialize<Dictionary<string,double>>();
+            var predictions = jsonElementPredictions.Deserialize<Dictionary<string, double>>();
 
             return predictions?.ToDictionary(x => DateTime.Parse(x.Key)
                 .ToUniversalTime(), x => x.Value);

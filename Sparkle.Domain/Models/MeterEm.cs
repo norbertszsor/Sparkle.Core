@@ -6,7 +6,7 @@ namespace Sparkle.Domain.Models
     {
         public string? Id { get; set; }
 
-        public required string Name { get; set; }
+        public required string? Name { get; set; }
 
         public string? CompanyId { get; set; }
 
@@ -14,8 +14,8 @@ namespace Sparkle.Domain.Models
 
         public IEnumerable<ReadingEm>? Readings { get; set; }
 
-        public DateTime CreatedAt { get; set; }
+        public required DateTime CreatedAt { get; set; }
 
-        public DateTime UpdatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
     }
 }

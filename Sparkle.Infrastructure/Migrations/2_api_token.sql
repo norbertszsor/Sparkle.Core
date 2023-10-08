@@ -1,0 +1,6 @@
+﻿CREATE TABLE IF NOT EXISTS ApiToken (
+    Id TEXT PRIMARY KEY,
+    TokenHash TEXT NOT NULL UNIQUE,
+    CreatedAt TEXT NOT NULL,
+    UpdatedAt TEXT
+);

@@ -6,6 +6,6 @@
 
         DateTime CreatedAt { get; set; }
 
-        DateTime UpdatedAt { get; set; }
+        DateTime? UpdatedAt { get; set; }
     }
 }

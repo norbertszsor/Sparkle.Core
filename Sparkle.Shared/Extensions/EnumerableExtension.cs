@@ -7,10 +7,9 @@ namespace Sparkle.Shared.Extensions
     {
         public static PagedList<T> ToPagedList<T>(this IEnumerable<T> source, dynamic query)
         {
-            if (source == null)
-                throw ThrowHelper.Throw<SparkleException>(nameof(source));
-
-            return new PagedList<T>(source, source.Count(), query?.Page, query?.PageSize);
+            return source == null
+                ? throw ThrowHelper.Throw<PagedList<T>>(nameof(source))
+                : new PagedList<T>(source, source.Count(), query?.Page, query?.PageSize);
         }
     }
 }

@@ -7,6 +7,6 @@ namespace Sparkle.Transfer.Query
     {
         public required string MeterId { get; set; }
 
-        public required ReggressorTimeSpanEnum Hours { get; set; }
+        public required RegressorTimeSpanEnum Hours { get; set; }
     }
 }

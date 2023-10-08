@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Sparkle.Api.Filters;
 using Sparkle.Transfer.Query;
 
 namespace Sparkle.Api.Endpoints
@@ -8,14 +9,12 @@ namespace Sparkle.Api.Endpoints
         public static void MapCompanyEndpoints(this IEndpointRouteBuilder app)
         {
             app.MapGet("/api/company/get", async (IMediator mediator, [AsParameters] GetCompanyQuery query) =>
-            {
-                var result = await mediator.Send(query);
+                {
+                    var result = await mediator.Send(query);
 
-                return result is null
-                    ? Results.NotFound()
-                    : Results.Ok(result);
+                    return result is null ? Results.NotFound() : Results.Ok(result);
 
-            }).AddEndpointFilter<ValidationFilter<GetCompanyQuery>>();
+                }).AddEndpointFilter<ValidationFilter<GetCompanyQuery>>();
         }
     }
 }

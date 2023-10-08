@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sparkle.Domain", "Sparkle.D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sparkle.Shared", "Sparkle.Shared\Sparkle.Shared.csproj", "{AF572DF8-1A59-4386-93CC-C2747E247312}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparkle.Handling", "Sparkle.Handling\Sparkle.Handling.csproj", "{71BA7429-DF88-4AB6-98E1-F70FAF35FFC5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{AF572DF8-1A59-4386-93CC-C2747E247312}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF572DF8-1A59-4386-93CC-C2747E247312}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF572DF8-1A59-4386-93CC-C2747E247312}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71BA7429-DF88-4AB6-98E1-F70FAF35FFC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71BA7429-DF88-4AB6-98E1-F70FAF35FFC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71BA7429-DF88-4AB6-98E1-F70FAF35FFC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71BA7429-DF88-4AB6-98E1-F70FAF35FFC5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,6 +64,7 @@ Global
 		{D6156749-9C31-4F2B-AFC2-CC9AF3F867B7} = {10338862-AEAD-40AE-AC73-B35339D72E3F}
 		{0D875860-81CB-4066-BF13-77E02A6045BC} = {10338862-AEAD-40AE-AC73-B35339D72E3F}
 		{AF572DF8-1A59-4386-93CC-C2747E247312} = {10338862-AEAD-40AE-AC73-B35339D72E3F}
+		{71BA7429-DF88-4AB6-98E1-F70FAF35FFC5} = {10338862-AEAD-40AE-AC73-B35339D72E3F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DB0581BB-79DB-4021-B480-3832DE5410DA}

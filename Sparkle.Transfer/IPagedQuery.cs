@@ -1,6 +1,6 @@
 ﻿namespace Sparkle.Transfer
 {
-    public interface IPagedQuery<TResponse> : IQuery<TResponse>
+    public interface IPagedQuery<out TResponse> : IQuery<TResponse>
     {
         public int? Page { get; set; }
 
