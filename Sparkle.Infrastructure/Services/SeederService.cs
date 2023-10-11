@@ -34,11 +34,11 @@ namespace Sparkle.Infrastructure.Services
 
         private static async Task SeedApiTokenAsync(SparkleContext context)
         {
-            var envApiToken = Environment.GetEnvironmentVariable("API_TOKEN");
+            var envApiToken = Environment.GetEnvironmentVariable("SPARKLE_API_TOKEN");
 
             if (string.IsNullOrEmpty(envApiToken))
             {
-                throw ThrowHelper.Throw<SeederService>("env variable API_TOKEN is empty or isn't exist.");
+                throw ThrowHelper.Throw<SeederService>("env variable SPARKLE_API_TOKEN is empty or isn't exist.");
             }
 
             var apiToken = await context.ApiTokens
@@ -75,6 +75,8 @@ namespace Sparkle.Infrastructure.Services
 
         private async Task SeedMetersAsync(SparkleContext context, string companyId)
         {
+            if (await context.Meters.AnyAsync()) return;
+
             using var reader = new StreamReader(_seedFilePath);
             var columns = GetColumnsFromStream(reader).ToList();
 

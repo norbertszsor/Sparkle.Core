@@ -7,12 +7,12 @@ using System.Text.Json;
 
 namespace SparkleRegressor.Client.Logic
 {
-    internal class SparkleRegressorClient : ISparkleRegressorClient
+    public class SparkleRegressorClient : ISparkleRegressorClient
     {
         private readonly HttpClient _httpClient;
         private readonly JsonSerializerOptions _jsonSerializerOptions;
 
-        internal SparkleRegressorClient(HttpClient httpClient)
+        public SparkleRegressorClient(HttpClient httpClient)
         {
             _httpClient = httpClient;
             _jsonSerializerOptions = new JsonSerializerOptions

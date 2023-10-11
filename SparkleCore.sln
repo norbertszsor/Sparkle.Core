@@ -4,10 +4,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "source", "source", "{10338862-AEAD-40AE-AC73-B35339D72E3F}"
+	ProjectSection(SolutionItems) = preProject
+		nuget.config = nuget.config
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sparkle.Api", "Sparkle.Api\Sparkle.Api.csproj", "{E73025B3-9B3A-4E3B-8499-534D1ABDD9BC}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SparkleRegressor.Client", "SparkleRegressor.Client\SparkleRegressor.Client.csproj", "{B1F0EC38-6C94-408C-9D58-8AB44BCB9103}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sparkle.Transfer", "Sparkle.Transfer\Sparkle.Transfer.csproj", "{8F4DE2FB-6268-4A7D-936F-BEC1E8352CBA}"
 EndProject
@@ -17,7 +18,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sparkle.Domain", "Sparkle.D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sparkle.Shared", "Sparkle.Shared\Sparkle.Shared.csproj", "{AF572DF8-1A59-4386-93CC-C2747E247312}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparkle.Handling", "Sparkle.Handling\Sparkle.Handling.csproj", "{71BA7429-DF88-4AB6-98E1-F70FAF35FFC5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sparkle.Handling", "Sparkle.Handling\Sparkle.Handling.csproj", "{71BA7429-DF88-4AB6-98E1-F70FAF35FFC5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +30,6 @@ Global
 		{E73025B3-9B3A-4E3B-8499-534D1ABDD9BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E73025B3-9B3A-4E3B-8499-534D1ABDD9BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E73025B3-9B3A-4E3B-8499-534D1ABDD9BC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B1F0EC38-6C94-408C-9D58-8AB44BCB9103}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B1F0EC38-6C94-408C-9D58-8AB44BCB9103}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B1F0EC38-6C94-408C-9D58-8AB44BCB9103}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B1F0EC38-6C94-408C-9D58-8AB44BCB9103}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8F4DE2FB-6268-4A7D-936F-BEC1E8352CBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8F4DE2FB-6268-4A7D-936F-BEC1E8352CBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F4DE2FB-6268-4A7D-936F-BEC1E8352CBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -59,7 +56,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{E73025B3-9B3A-4E3B-8499-534D1ABDD9BC} = {10338862-AEAD-40AE-AC73-B35339D72E3F}
-		{B1F0EC38-6C94-408C-9D58-8AB44BCB9103} = {10338862-AEAD-40AE-AC73-B35339D72E3F}
 		{8F4DE2FB-6268-4A7D-936F-BEC1E8352CBA} = {10338862-AEAD-40AE-AC73-B35339D72E3F}
 		{D6156749-9C31-4F2B-AFC2-CC9AF3F867B7} = {10338862-AEAD-40AE-AC73-B35339D72E3F}
 		{0D875860-81CB-4066-BF13-77E02A6045BC} = {10338862-AEAD-40AE-AC73-B35339D72E3F}

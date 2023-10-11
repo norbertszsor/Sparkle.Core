@@ -35,7 +35,7 @@ namespace Sparkle.Domain.Data
                 .Property(x => x.UpdatedAt).HasColumnName("UpdatedAt").IsNullable()
                 .Property(x => x.MeterId).HasColumnName("MeterId").IsNullable();
 
-            builder.Entity<ApiTokenEm>().HasTableName("ApiTokens")
+            builder.Entity<ApiTokenEm>().HasTableName("ApiToken")
                 .Property(x=>x.Id).HasColumnName("Id").IsPrimaryKey()
                 .Property(x=>x.TokenHash).HasColumnName("TokenHash").IsNotNull()
                 .Property(x=>x.CreatedAt).HasColumnName("CreatedAt").IsNotNull()

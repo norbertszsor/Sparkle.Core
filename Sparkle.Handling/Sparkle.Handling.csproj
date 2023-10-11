@@ -9,12 +9,12 @@
   <ItemGroup>
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.7.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0" />
+    <PackageReference Include="SparkleRegressor.Client" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Sparkle.Infrastructure\Sparkle.Infrastructure.csproj" />
     <ProjectReference Include="..\Sparkle.Shared\Sparkle.Shared.csproj" />
-    <ProjectReference Include="..\SparkleRegressor.Client\SparkleRegressor.Client.csproj" />
   </ItemGroup>
 
 </Project>
