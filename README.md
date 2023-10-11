@@ -14,7 +14,7 @@ Sparkle Core is a component of the Sparkle project, developed using .NET Core 7 
 
 - **Seeder:** The seeder functionality allows for easy population of the database with sample data, simplifying the testing and development process.
 
-- **Standalone DLL - Sparkle.Regressor.Client:** Sparkle Core provides a standalone DLL called Sparkle.Regressor.Client that can be used independently in other projects to communicate with [Sparkle.Reggresor](https://github.com/norbertszsor/Sparkle.Regressor). This enables seamless integration and interaction with the regression module in diverse applications.
+- **Sparkle.Regressor.Client:** [Sparkle Core provides a standalone DLL called Sparkle.Regressor.](https://github.com/norbertszsor/SparkleRegressor.Client) Client that can be used independently in other projects to communicate with [Sparkle.Reggresor](https://github.com/norbertszsor/Sparkle.Regressor).
 
 ## Getting Started
 
