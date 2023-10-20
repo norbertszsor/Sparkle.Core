@@ -7,14 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Migrations\1_initial.sql" />
     <None Remove="Seed\data.csv" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Migrations\1_initial.sql">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Seed\data.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

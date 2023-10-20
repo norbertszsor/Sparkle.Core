@@ -14,8 +14,9 @@ namespace Sparkle.Api.Endpoints
                         var result = await mediator.Send(query);
 
                         return result is null ? Results.NotFound() : Results.Ok(result);
-
-                    }).AddEndpointFilter<ValidationFilter<GetPredictionQuery>>();
+                    })
+                .AddEndpointFilter<ValidationFilter<GetPredictionQuery>>()
+                .CacheOutput("UntilNextHour");
 
             app.MapGet("/api/regressor/get/comparison",
                     async (IMediator mediator, [AsParameters] GetComparisonQuery query) =>
@@ -23,9 +24,9 @@ namespace Sparkle.Api.Endpoints
                         var result = await mediator.Send(query);
 
                         return result is null ? Results.NotFound() : Results.Ok(result);
-
-                    }).AddEndpointFilter<ValidationFilter<GetComparisonQuery>>();
-
+                    })
+                .AddEndpointFilter<ValidationFilter<GetComparisonQuery>>()
+                .CacheOutput("UntilNextHour");
         }
     }
 }

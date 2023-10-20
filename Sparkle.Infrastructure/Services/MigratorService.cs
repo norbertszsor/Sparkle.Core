@@ -1,17 +1,14 @@
-﻿using LinqToDB.Data;
-using Sparkle.Domain.Data;
+﻿using Sparkle.Domain.Data;
 using Sparkle.Domain.Interfaces;
-using Sparkle.Shared.Comparators;
 using Sparkle.Shared.Helpers;
 using System.Data.SQLite;
+using LinqToDB;
+using Sparkle.Domain.Models;
 
 namespace Sparkle.Infrastructure.Services
 {
     public class MigratorService : IMigratorService
     {
-        private readonly string _migrationFolderPath =
-            Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Migrations");
-
         public async Task MigrateAsync(SparkleContext context)
         {
             if (string.IsNullOrEmpty(context.ConnectionString))
@@ -23,23 +20,16 @@ namespace Sparkle.Infrastructure.Services
 
             await using (await context.BeginTransactionAsync())
             {
-                foreach (var migration in GetMigrations())
-                {
-                    var sql = await File.ReadAllTextAsync(migration.FullName);
+                await context.CreateTableAsync<CompanyEm>(tableOptions: TableOptions.CreateIfNotExists);
 
-                    await context.ExecuteAsync(sql);
-                }
+                await context.CreateTableAsync<MeterEm>(tableOptions: TableOptions.CreateIfNotExists);
+
+                await context.CreateTableAsync<ReadingEm>(tableOptions: TableOptions.CreateIfNotExists);
+
+                await context.CreateTableAsync<ApiTokenEm>(tableOptions: TableOptions.CreateIfNotExists);
 
                 await context.CommitTransactionAsync();
             }
-        }
-
-        private IEnumerable<FileInfo> GetMigrations()
-        {
-            return Directory.GetFiles(_migrationFolderPath, "*.sql")
-                .Select(f => new FileInfo(f))
-                .OrderBy(f => f, new FileInfoCreationDateComparer())
-                .ToList();
         }
     }
 }

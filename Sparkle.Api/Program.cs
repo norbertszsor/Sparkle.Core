@@ -29,6 +29,13 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.AddOutputCache(options =>
+{
+    options.AddBasePolicy(policyBuilder => policyBuilder.Expire(TimeSpan.FromSeconds(20)));
+    options.AddPolicy("UntilNextHour",
+        policyBuilder => policyBuilder.Expire(TimeSpan.FromMinutes(60 - DateTime.UtcNow.Minute)));
+});
+
 var connectionString = builder.Configuration.GetConnectionString("Default") ??
                        throw ThrowHelper.Throw<WebApplication>("no connection string found");
 
@@ -51,13 +58,15 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+app.UseCors("AllowAll");
+
+app.UseOutputCache();
+
 app.AddEndpoints();
 
 app.UseSwagger();
 
 app.UseSwaggerUI();
-
-app.UseCors("AllowAll");
 
 app.RunMigrator();
 

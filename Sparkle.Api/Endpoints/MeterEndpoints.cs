@@ -13,8 +13,9 @@ namespace Sparkle.Api.Endpoints
                     var result = await mediator.Send(query);
 
                     return result?.Items is null ? Results.NotFound() : Results.Ok(result);
-
-                }).AddEndpointFilter<ValidationFilter<GetMeterListQuery>>();
+                })
+                .AddEndpointFilter<ValidationFilter<GetMeterListQuery>>()
+                .CacheOutput();
         }
     }
 }

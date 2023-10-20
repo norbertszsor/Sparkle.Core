@@ -1,6 +1,8 @@
-﻿namespace Sparkle.Transfer
+﻿using Sparkle.Transfer.Interfaces;
+
+namespace Sparkle.Transfer
 {
-    public class PagedList<T>
+    public class PagedList<T> : IPagedList<T>
     {
         public int TotalCount { get; set; }
 
