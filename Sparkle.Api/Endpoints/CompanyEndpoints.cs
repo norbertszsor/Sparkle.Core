@@ -12,7 +12,7 @@ namespace Sparkle.Api.Endpoints
                 {
                     var result = await mediator.Send(query);
 
-                    return result is null ? Results.NotFound() : Results.Ok(result);
+                    return result == null ? Results.NotFound() : Results.Ok(result);
                 })
                 .AddEndpointFilter<ValidationFilter<GetCompanyQuery>>()
                 .CacheOutput();

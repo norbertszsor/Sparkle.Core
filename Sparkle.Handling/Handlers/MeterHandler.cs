@@ -25,8 +25,7 @@ namespace Sparkle.Handling.Handlers
 
         public async Task<PagedList<MeterDto>> Handle(GetMeterListQuery request, CancellationToken cancellationToken)
         {
-            _ = await _companyRepository.GetByIdAsync(request.CompanyId) ??
-                throw ThrowHelper.Throw<MeterHandler>($"Company with id {request.CompanyId} not found");
+            await _companyRepository.EnsureExistAsync(request.CompanyId);
 
             var companyMeters = await _storage.Meters.Where(x => x.CompanyId == request.CompanyId)
                 .Select(x => x.MapToDto())

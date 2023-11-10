@@ -5,11 +5,16 @@ WORKDIR /app
 EXPOSE 443
 EXPOSE 10000
 
+ENV SPARKLE_API_TOKEN="1qaz!QAZ"
+
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["Sparkle.Api/Sparkle.Api.csproj", "Sparkle.Api/"]
 COPY ["Sparkle.Transfer/Sparkle.Transfer.csproj", "Sparkle.Transfer/"]
-COPY ["SparkleRegressor.Client/SparkleRegressor.Client.csproj", "SparkleRegressor.Client/"]
+COPY ["Sparkle.Domain/Sparkle.Domain.csproj", "Sparkle.Domain/"]
+COPY ["Sparkle.Infrastructure/Sparkle.Infrastructure.csproj", "Sparkle.Infrastructure/"]
+COPY ["Sparkle.Shared/Sparkle.Shared.csproj", "Sparkle.Shared/"]
+COPY ["Sparkle.Handling/Sparkle.Handling.csproj", "Sparkle.Handling/"]"]
 RUN dotnet restore "Sparkle.Api/Sparkle.Api.csproj"
 COPY . .
 WORKDIR "/src/Sparkle.Api"

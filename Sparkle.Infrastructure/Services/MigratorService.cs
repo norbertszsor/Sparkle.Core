@@ -11,7 +11,7 @@ namespace Sparkle.Infrastructure.Services
     {
         public async Task MigrateAsync(SparkleContext context)
         {
-            if (string.IsNullOrEmpty(context.ConnectionString))
+            if (string.IsNullOrWhiteSpace(context.ConnectionString))
             {
                 throw ThrowHelper.Throw<SeederService>("Connection string is empty.");
             }

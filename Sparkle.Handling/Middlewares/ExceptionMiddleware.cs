@@ -6,11 +6,11 @@ using System.Text.Json;
 
 namespace Sparkle.Handling.Middlewares
 {
-    public class ErrorHandlingMiddleware : IMiddleware
+    public class ExceptionMiddleware : IMiddleware
     {
-        private readonly ILogger<ErrorHandlingMiddleware> _logger;
+        private readonly ILogger<ExceptionMiddleware> _logger;
 
-        public ErrorHandlingMiddleware(ILogger<ErrorHandlingMiddleware> logger)
+        public ExceptionMiddleware(ILogger<ExceptionMiddleware> logger)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }

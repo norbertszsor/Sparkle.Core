@@ -4,7 +4,7 @@
     {
         public int Compare(FileInfo? x, FileInfo? y)
         {
-            if (x is null || y is null) 
+            if (x == null || y == null) 
                 throw new ArgumentNullException(nameof(x), "FileInfo is null");
 
             return x.CreationTime.CompareTo(y.CreationTime);

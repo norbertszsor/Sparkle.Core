@@ -15,7 +15,7 @@ namespace Sparkle.Infrastructure.Services
 
         public async Task SeedAsync(SparkleContext context)
         {
-            if (string.IsNullOrEmpty(context.ConnectionString))
+            if (string.IsNullOrWhiteSpace(context.ConnectionString))
             {
                 throw ThrowHelper.Throw<SeederService>("Connection string is empty.");
             }
@@ -36,7 +36,7 @@ namespace Sparkle.Infrastructure.Services
         {
             var envApiToken = Environment.GetEnvironmentVariable("SPARKLE_API_TOKEN");
 
-            if (string.IsNullOrEmpty(envApiToken))
+            if (string.IsNullOrWhiteSpace(envApiToken))
             {
                 throw ThrowHelper.Throw<SeederService>("env variable SPARKLE_API_TOKEN is empty or isn't exist.");
             }
@@ -45,11 +45,11 @@ namespace Sparkle.Infrastructure.Services
                 .Select(x => x.Id)
                 .FirstOrDefaultAsync();
 
-            if (string.IsNullOrEmpty(apiToken))
+            if (string.IsNullOrWhiteSpace(apiToken))
             {
                 await context.InsertWithGuidIdentityAsync(new ApiTokenEm
                 {
-                    Id = Guid.NewGuid().ToString(),
+                    Id = TokenHelper.GenerateToken(),
                     TokenHash = TokenHelper.HashToken(envApiToken),
                     CreatedAt = DateTime.UtcNow
                 });
@@ -63,7 +63,7 @@ namespace Sparkle.Infrastructure.Services
                 .Select(x => x.Id)
                 .FirstOrDefaultAsync();
 
-            return !string.IsNullOrEmpty(companyId)
+            return !string.IsNullOrWhiteSpace(companyId)
                 ? companyId
                 : await context.InsertWithGuidIdentityAsync(new CompanyEm
                 {
@@ -86,8 +86,7 @@ namespace Sparkle.Infrastructure.Services
 
             var meters = columns.Select(column =>
             {
-                var meterId = Guid.NewGuid()
-                    .ToString();
+                var meterId = TokenHelper.GenerateToken();
 
                 return new MeterEm
                 {
@@ -98,7 +97,7 @@ namespace Sparkle.Infrastructure.Services
                     Readings = column.Skip(1)
                         .Select((value, i) => new ReadingEm
                         {
-                            Id = Guid.NewGuid().ToString(),
+                            Id = TokenHelper.GenerateToken(),
                             MeterId = meterId,
                             Time = DateTime.Parse(dateTimeIndexes[i + 1]),
                             Value = Convert.ToDouble(value,
@@ -125,7 +124,7 @@ namespace Sparkle.Infrastructure.Services
                                .Split('\n')
                                .Select(x => x.Split(','))
                                .ToArray() ??
-                           throw ThrowHelper.Throw<SeederService>("SeederService file are empty.");
+                           throw ThrowHelper.Throw<SeederService>("Seed data file are empty.");
 
             return Enumerable.Range(0, csvArray[0].Length).Select(i => csvArray.Select(x => x[i])
                 .ToArray());

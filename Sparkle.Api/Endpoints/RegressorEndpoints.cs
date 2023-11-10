@@ -13,7 +13,7 @@ namespace Sparkle.Api.Endpoints
                     {
                         var result = await mediator.Send(query);
 
-                        return result is null ? Results.NotFound() : Results.Ok(result);
+                        return result == null ? Results.NotFound() : Results.Ok(result);
                     })
                 .AddEndpointFilter<ValidationFilter<GetPredictionQuery>>()
                 .CacheOutput("UntilNextHour");
@@ -23,7 +23,7 @@ namespace Sparkle.Api.Endpoints
                     {
                         var result = await mediator.Send(query);
 
-                        return result is null ? Results.NotFound() : Results.Ok(result);
+                        return result == null ? Results.NotFound() : Results.Ok(result);
                     })
                 .AddEndpointFilter<ValidationFilter<GetComparisonQuery>>()
                 .CacheOutput("UntilNextHour");

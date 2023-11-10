@@ -9,11 +9,11 @@ namespace Sparkle.Shared.Extensions
         public static async Task<string> InsertWithGuidIdentityAsync<T>(this DataConnection connection, T? entity)
             where T : class
         {
-            var id = Guid.NewGuid().ToString();
+            var id = TokenHelper.GenerateToken();
 
             var idProperty = typeof(T).GetProperty("Id");
 
-            if (idProperty is null || entity is null)
+            if (idProperty == null || entity == null)
             {
                 throw ThrowHelper.Throw<DataConnection>("Entity does not exist or do not have Id property.");
             }

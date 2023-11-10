@@ -6,6 +6,10 @@
 
         Task<IEnumerable<TEntity>> GetAllAsync();
 
+        Task<bool> ExistAsync(TKey id);
+
+        Task EnsureExistAsync(TKey id);
+
         Task<string> AddAsync(TEntity entity);
 
         Task UpdateAsync(TEntity entity);

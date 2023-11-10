@@ -1,12 +1,14 @@
 using LinqToDB;
 using LinqToDB.AspNet;
 using LinqToDB.AspNet.Logging;
+using Microsoft.OpenApi.Models;
 using Sparkle.Domain.Data;
 using Sparkle.Shared.Extensions;
 using Sparkle.Infrastructure;
 using Sparkle.Shared.Helpers;
 using Sparkle.Handling;
 using Sparkle.Api.Extensions;
+using Sparkle.Api.Filters;
 using SparkleRegressor.Client;
 
 #region builder
@@ -50,7 +52,12 @@ builder.Services.AddSparkleRegressorClient(builder.Configuration);
 
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(config =>
+{
+    config.SwaggerDoc("v1", new OpenApiInfo { Title = "Sparkle API", Version = "v1" });
+
+    config.OperationFilter<SwaggerAuthFilter>();
+});
 
 #endregion
 
@@ -71,6 +78,8 @@ app.UseSwaggerUI();
 app.RunMigrator();
 
 app.RunSeeder();
+
+app.UseHandling();
 
 if (app.Environment.IsDevelopment())
 {

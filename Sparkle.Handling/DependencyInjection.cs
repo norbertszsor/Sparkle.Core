@@ -2,6 +2,7 @@
 using Sparkle.Handling.Validators;
 using FluentValidation;
 using System.Reflection;
+using Microsoft.AspNetCore.Builder;
 using Sparkle.Handling.Middlewares;
 
 namespace Sparkle.Handling
@@ -26,9 +27,20 @@ namespace Sparkle.Handling
                 options.Lifetime = ServiceLifetime.Scoped;
             });
 
-            services.AddTransient<ErrorHandlingMiddleware>();
+            services.AddTransient<ExceptionMiddleware>();
+
+            services.AddTransient<AuthTokenMiddleware>();
 
             return services;
+        }
+
+        public static IApplicationBuilder UseHandling(this IApplicationBuilder app)
+        {
+            app.UseMiddleware<ExceptionMiddleware>();
+
+            app.UseMiddleware<AuthTokenMiddleware>();
+
+            return app;
         }
     }
 }

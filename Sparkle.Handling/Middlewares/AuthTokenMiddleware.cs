@@ -26,6 +26,8 @@ namespace Sparkle.Handling.Middlewares
                 context.Response.StatusCode = StatusCodes.Status401Unauthorized;
 
                 await context.Response.WriteAsync("Missing API token");
+
+                return;
             }
 
             var hashedToken = await _storage.ApiTokens
@@ -43,6 +45,8 @@ namespace Sparkle.Handling.Middlewares
                 context.Response.StatusCode = StatusCodes.Status401Unauthorized;
 
                 await context.Response.WriteAsync("Invalid API token");
+
+                return;
             }
         }
     }
