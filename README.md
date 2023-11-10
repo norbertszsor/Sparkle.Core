@@ -9,8 +9,10 @@ Sparkle Core is a component of the Sparkle project, developed using .NET Core 7 
 - **Modular Clean Architecture:** The application is designed using clean architecture principles, ensuring modularity, flexibility, and maintainability.
 
 - **Database Agnostic:** It uses [Linq2DB](https://linq2db.github.io/) to achieve high-speed queries and data seeding, making it adaptable to different database engines.
+
+- **MediatR:** Sparkle Core employs the MediatR library for efficient communication between application components, promoting a clean and loosely-coupled architecture.
   
-- **Auto Migrator:** Sparkle Core includes an auto migrator that simplifies database schema updates and migrations, ensuring smooth transitions when evolving the database structure.
+- **Naive Auto Migrator:** Sparkle Core includes an naive auto migrator that simplifies database schema updates and migrations, ensuring smooth transitions when evolving the database structure.
 
 - **Seeder:** The seeder functionality allows for easy population of the database with sample data, simplifying the testing and development process.
 
@@ -34,7 +36,12 @@ To get started with Sparkle Core, follow these steps:
    - Access the Swagger documentation at [http://localhost:7011/swagger/index.html](https://localhost:7011/swagger/index.html) to interact with the API.
 
 4. **Seeding Data**:
-   - Use the provided data seeding functionality to populate the database with sample data for testing.(optionl, default on)
+   - Use the provided data seeding functionality to populate the database with sample data for testing. (optional, default on)
+
+5. **Set SPARKLE_API_TOKEN Environment Variable**:
+   - Before running the application, ensure that you have set the `SPARKLE_API_TOKEN` environment variable. This token is required for authentication and authorization. You can obtain the token from [insert instructions on how to obtain or generate the token].
+
+   Note: Failure to set the `SPARKLE_API_TOKEN` environment variable may result in authentication issues or exceptions when interacting with the API.
 
 ## Deployment
 
@@ -71,18 +78,4 @@ You can access the live version of Sparkle Core at [https://sparklecore7.bsite.n
 
 ## Version
 
-The current version of Sparkle Core is 1.0.0.
-
-## Contribution
-
-Contributions to Sparkle Core are highly encouraged. If you wish to contribute, please follow these steps:
-
-1. Fork the repository on GitHub.
-
-2. Create a new branch with a descriptive name for your feature or bug fix.
-
-3. Implement your changes while ensuring that the code passes all tests.
-
-4. Submit a pull request with a clear description of the changes made.
-
-We value your contributions in making Sparkle Core even better. For questions or further information, feel free to contact us. Thank you for choosing Sparkle Core!
+The current version of Sparkle Core can be found there [https://github.com/norbertszsor/Sparkle.Core/releases](https://github.com/norbertszsor/Sparkle.Core/releases)
