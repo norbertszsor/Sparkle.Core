@@ -1,4 +1,5 @@
-﻿using LinqToDB;
+﻿using System.Text.Json;
+using LinqToDB;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Sparkle.Domain.Data;
@@ -25,7 +26,10 @@ namespace Sparkle.Handling.Middlewares
 
                 context.Response.StatusCode = StatusCodes.Status401Unauthorized;
 
-                await context.Response.WriteAsync("Missing API token");
+                await context.Response.WriteAsync(JsonSerializer.Serialize(new
+                {
+                    message = "Missing API token"
+                }));
 
                 return;
             }
@@ -44,7 +48,10 @@ namespace Sparkle.Handling.Middlewares
 
                 context.Response.StatusCode = StatusCodes.Status401Unauthorized;
 
-                await context.Response.WriteAsync("Invalid API token");
+                await context.Response.WriteAsync(JsonSerializer.Serialize(new
+                {
+                    message = "Invalid API token"
+                }));
 
                 return;
             }

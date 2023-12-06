@@ -46,12 +46,10 @@ namespace Sparkle.Handling.Middlewares
 
             response.StatusCode = statusCode;
 
-            var result = JsonSerializer.Serialize(new
+            return response.WriteAsync(JsonSerializer.Serialize(new
             {
                 message = ex.Message
-            });
-
-            return response.WriteAsync(result);
+            }));
         }
     }
 }
